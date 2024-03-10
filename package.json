@@ -1,0 +1,21 @@
+{
+  "name": "raspy-dream-d33f",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "start": "wrangler dev"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240222.0",
+    "typescript": "^5.0.4",
+    "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "install": "^0.13.0",
+    "npm": "^10.5.0",
+    "oauth-1.0a": "^2.2.6"
+  }
+}
