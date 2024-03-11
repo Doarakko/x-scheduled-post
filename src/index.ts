@@ -1,5 +1,4 @@
-import Oauth from "oauth-1.0a";
-import { HmacSHA1, enc } from 'crypto-js';
+import Twitter from './twitter';
 
 export interface Env {
     TWITTER_BEARER_TOKEN: string;
@@ -9,46 +8,40 @@ export interface Env {
     TWITTER_ACCESS_TOKEN_SECRET: string;
 }
 
+const hiraganaStart = 0x3041;
+const hiraganaEnd = 0x3096;
+
+function getRandomHiragana(len: number): string {
+    let result = '';
+    for (let i = 0; i < len; i++) {
+        const randomCode = Math.floor(Math.random() * (hiraganaEnd - hiraganaStart + 1)) + hiraganaStart;
+        result += String.fromCharCode(randomCode);
+    }
+
+    return result;
+}
+
+async function post(env: Env): Promise<Response> {
+    const twitter = new Twitter(
+        env.TWITTER_CONSUMER_API_KEY,
+        env.TWITTER_CONSUMER_API_SECRET,
+        env.TWITTER_ACCESS_TOKEN,
+        env.TWITTER_ACCESS_TOKEN_SECRET
+    );
+
+    const text = getRandomHiragana(3);
+    return twitter.post(text);
+}
+
 export default {
     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-        console.log(env);
-        const oauth = new Oauth({
-            consumer: {
-                key: env.TWITTER_CONSUMER_API_KEY,
-                secret: env.TWITTER_CONSUMER_API_SECRET
-            },
-            signature_method: 'HMAC-SHA1',
-            hash_function(baseString, key) {
-                return HmacSHA1(baseString, key).toString(enc.Base64);
-              },
+        const response = await post(env);
+        return new Response(JSON.stringify({ status: response.status, message: response.statusText }), {
+            headers: { 'Content-Type': 'application/json' },
         });
+    },
 
-        const oauthToken: OAuth.Token = {
-            key: env.TWITTER_ACCESS_TOKEN,
-            secret: env.TWITTER_ACCESS_TOKEN_SECRET,
-        };
-
-        const requestAuth = {
-            url: 'https://api.twitter.com/2/tweets',
-            method: 'POST',
-        };
-
-        const reqestBody = JSON.stringify({
-            text: "Hello World from Cloudflare Workers!",
-        });
-
-        const response = await fetch(requestAuth.url, {
-            method: requestAuth.method,
-            headers: {
-                ...oauth.toHeader(oauth.authorize(requestAuth, oauthToken)),
-                'Content-Type': 'application/json',
-            },
-            body: reqestBody,
-        });
-
-        return new Response(
-            JSON.stringify({ status: response.status, message: response.statusText }), 
-            { headers: { 'Content-Type': 'application/json' } }
-        );
+    async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+        ctx.waitUntil(post(env));
     },
 };
