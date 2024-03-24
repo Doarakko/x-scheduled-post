@@ -34,12 +34,14 @@ async function post(env: Env): Promise<Response> {
 }
 
 export default {
-    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-        const response = await post(env);
-        return new Response(JSON.stringify({ status: response.status, message: response.statusText }), {
-            headers: { 'Content-Type': 'application/json' },
-        });
-    },
+    // If you remove the comment out, you can check if the post is working by accessing the URL.
+    //
+    // async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    //     const response = await post(env);
+    //     return new Response(JSON.stringify({ status: response.status, message: response.statusText }), {
+    //         headers: { 'Content-Type': 'application/json' },
+    //     });
+    // },
 
     async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
         ctx.waitUntil(post(env));

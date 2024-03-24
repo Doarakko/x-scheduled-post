@@ -1,5 +1,7 @@
 # x-scheduled-post
 
+Post to X(Twitter) using Cloudflare.
+
 ## Requirements
 
 - Cloudflare
@@ -43,6 +45,23 @@
    ```bash
    wrangler dev
    ```
+
+### Check if you can post
+
+Remove this comment out and access to your URL.
+
+`src/index.ts`
+
+```typescript
+export default {
+    // async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    //     const response = await post(env);
+    //     return new Response(JSON.stringify({ status: response.status, message: response.statusText }), {
+    //         headers: { 'Content-Type': 'application/json' },
+    //     });
+    // },
+
+```
 
 ## References
 
