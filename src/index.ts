@@ -30,18 +30,16 @@ async function post(env: Env): Promise<Response> {
     );
 
     const text = getRandomHiragana(3);
-    return twitter.post(text);
+    return twitter.post(text, 'https://images.ygoprodeck.com/images/cards/3909436.jpg');
 }
 
 export default {
-    // If you remove the comment out, you can check if the post is working by accessing the URL.
-    //
-    // async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    //     const response = await post(env);
-    //     return new Response(JSON.stringify({ status: response.status, message: response.statusText }), {
-    //         headers: { 'Content-Type': 'application/json' },
-    //     });
-    // },
+    async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+        const response = await post(env);
+        return new Response(JSON.stringify({ status: response.status, message: response.statusText }), {
+            headers: { 'Content-Type': 'application/json' },
+        });
+    },
 
     async scheduled(event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
         ctx.waitUntil(post(env));
