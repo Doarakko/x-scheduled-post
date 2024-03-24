@@ -1,10 +1,11 @@
 # x-scheduled-post
 
-Post to X(Twitter) using Cloudflare.
+Post to X(Twitter) regularly using Cloudflare.
 
 ## Requirements
 
 - Cloudflare
+- Twitter Account
 - wrangler CLI
 
 ## Usage
@@ -13,6 +14,15 @@ Post to X(Twitter) using Cloudflare.
 
    ```bash
    npx wrangler generate x-scheduled-post https://github.com/Doarakko/x-scheduled-post
+   ```
+
+1. Configure cron, default is once every hour
+
+   `wrandler.toml`
+
+   ```toml
+   [triggers]
+   crons = ["0 * * * *"]
    ```
 
 1. Deploy to Cloudflare
