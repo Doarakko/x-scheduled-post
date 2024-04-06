@@ -47,7 +47,7 @@ Post to X(Twitter) regularly using Cloudflare.
 1. Setup the environment variables
 
    ```bash
-   cp .dev.vars
+   cp .dev.vars.example .dev.vars
    ```
 
 1. Run the worker
