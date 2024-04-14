@@ -1,4 +1,4 @@
-# x-scheduled-post
+# x-bot-playground
 
 Post to X(Twitter) regularly using Cloudflare.
 
@@ -13,7 +13,7 @@ Post to X(Twitter) regularly using Cloudflare.
 1. Clone the repository
 
    ```bash
-   npx wrangler generate x-scheduled-post https://github.com/Doarakko/x-scheduled-post
+   npx wrangler generate x-bot-playground https://github.com/Doarakko/x-bot-playground
    ```
 
 1. Configure cron, default is once every hour
