@@ -7,6 +7,7 @@ Post to X(Twitter) regularly using Cloudflare.
 - Cloudflare
 - Twitter Account
 - wrangler CLI
+- npm
 
 ## Usage
 
@@ -14,6 +15,7 @@ Post to X(Twitter) regularly using Cloudflare.
 
    ```bash
    npx wrangler generate x-bot-playground https://github.com/Doarakko/x-bot-playground
+   npm i
    ```
 
 1. Configure cron, default is once every hour
