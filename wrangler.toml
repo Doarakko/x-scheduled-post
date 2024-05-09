@@ -2,5 +2,7 @@ name = "x-bot-playground"
 main = "src/index.ts"
 compatibility_date = "2024-03-04"
 
+compatibility_flags = [ "nodejs_compat" ]
+
 [triggers]
 crons = ["0 * * * *"]
